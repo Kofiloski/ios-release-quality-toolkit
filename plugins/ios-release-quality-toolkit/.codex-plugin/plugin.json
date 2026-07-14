@@ -1,0 +1,41 @@
+{
+  "name": "ios-release-quality-toolkit",
+  "version": "0.1.0",
+  "description": "Find App Store release risks, repair XCUITest testability failures, and add evidence-rich iOS Simulator checks.",
+  "author": {
+    "name": "Kristijan Kofiloski",
+    "url": "https://kofiloski.com"
+  },
+  "homepage": "https://kofiloski.com/Tools",
+  "repository": "https://github.com/Kofiloski/ios-release-quality-toolkit",
+  "license": "MIT",
+  "keywords": [
+    "ios",
+    "xcode",
+    "xcuitest",
+    "app-store-review",
+    "ui-testing",
+    "swiftui",
+    "github-actions"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "iOS Release Quality Toolkit",
+    "shortDescription": "App Review and UI automation preflight",
+    "longDescription": "Local-first workflows for likely Apple App Review risks, XCUITest element and launch-contract failures, and reproducible iOS Simulator checks with reviewable evidence.",
+    "developerName": "Kristijan Kofiloski",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://kofiloski.com/Tools",
+    "privacyPolicyURL": "https://kofiloski.com/OpenSourcePrivacy",
+    "termsOfServiceURL": "https://kofiloski.com/OpenSourceTerms",
+    "defaultPrompt": [
+      "Review this iOS repo for likely App Store rejection risks.",
+      "Fix this XCUITest element-not-found failure.",
+      "Add a reproducible iOS Simulator check to this repo."
+    ],
+    "brandColor": "#3157D5",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.svg"
+  }
+}

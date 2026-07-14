@@ -1,0 +1,20 @@
+{
+  "name": "kofiloski-ios-tools",
+  "interface": {
+    "displayName": "Kofiloski iOS Tools"
+  },
+  "plugins": [
+    {
+      "name": "ios-release-quality-toolkit",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ios-release-quality-toolkit"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

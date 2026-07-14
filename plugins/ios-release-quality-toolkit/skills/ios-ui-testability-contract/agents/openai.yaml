@@ -1,0 +1,4 @@
+interface:
+  display_name: "iOS UI Testability Contract"
+  short_description: "Fix XCUITest element lookup and launch failures"
+  default_prompt: "Use $ios-ui-testability-contract to diagnose why XCUITest cannot find or interact with the intended iOS control, patch the smallest app-side testability issue, and verify the focused replay."

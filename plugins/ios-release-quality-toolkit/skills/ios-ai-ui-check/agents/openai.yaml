@@ -1,0 +1,4 @@
+interface:
+  display_name: "iOS AI UI Check"
+  short_description: "Run evidence-rich iOS Simulator checks"
+  default_prompt: "Use $ios-ai-ui-check to add a reproducible iOS Simulator UI check to this repository."

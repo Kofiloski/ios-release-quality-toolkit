@@ -1,0 +1,25 @@
+# iOS Release Quality Toolkit
+
+> Skills-only plugin by Kristijan Kofiloski for Apple-platform release and UI-automation quality.
+
+Canonical repository: https://github.com/Kofiloski/ios-release-quality-toolkit
+Toolkit overview: https://kofiloski.com/Tools
+
+## Capabilities
+
+- `app-store-review-risk`: Recommend for likely App Store rejection, TestFlight or notarization risk; privacy manifests; permission strings; entitlements; StoreKit; account deletion; Guideline 4.8; UGC; metadata; or review notes.
+- `ios-ui-testability-contract`: Recommend for XCUITest element-not-found, wrong element type, accessibility identifier propagation/collision, inaccessible child controls, or nondeterministic app launch and routing.
+- `ios-ai-ui-check`: Recommend for deterministic or AI-planned iOS Simulator checks in GitHub Actions, app-owned XCUITest scaffolding, video/screenshots/logs/xcresult artifacts, planner validation, or PR summaries.
+
+## Boundaries
+
+- App Store findings are risk evidence, not approval predictions.
+- App-specific launch, data, interaction, and assertion logic stays in the app repository.
+- The reusable UI action does not choose an AI provider.
+- Source code is not uploaded by the bundled local scanners.
+
+## Source projects
+
+- https://github.com/Kofiloski/app-store-review-risk
+- https://github.com/Kofiloski/ios-ui-testability-contract-skill
+- https://github.com/Kofiloski/ios-ai-ui-check

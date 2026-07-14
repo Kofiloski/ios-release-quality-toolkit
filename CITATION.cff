@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If this toolkit helps your work, please cite its repository."
+title: "iOS Release Quality Toolkit"
+version: 0.1.0
+date-released: 2026-07-14
+authors:
+  - family-names: Kofiloski
+    given-names: Kristijan
+url: "https://github.com/Kofiloski/ios-release-quality-toolkit"
+repository-code: "https://github.com/Kofiloski/ios-release-quality-toolkit"
+license: MIT
+keywords:
+  - iOS
+  - App Store Review
+  - XCUITest
+  - SwiftUI
+  - UI automation
+  - Agent Skills
