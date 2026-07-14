@@ -28,6 +28,13 @@ python3 scripts/check-toolkit.py
 python3 -m unittest discover -s tests -v
 ```
 
+## Why The Projects Publish Differently
+
+The toolkit presents all three projects as agent skills, but their executable delivery paths are different:
+
+- `app-store-review-risk` and `ios-ui-testability-contract` include Python CLIs, so their release workflows publish signed packages to PyPI in addition to GitHub releases.
+- `ios-ai-ui-check` is a GitHub Action and reusable workflow. A versioned GitHub release tag is its executable distribution: callers run `Kofiloski/ios-ai-ui-check@v0.3.0` or the matching reusable workflow directly from that ref. The toolkit bundles the agent-facing adoption and debugging guidance, not another copy of the action runtime.
+
 ## Ask naturally
 
 The skill descriptions are written to trigger from concrete problems, including:

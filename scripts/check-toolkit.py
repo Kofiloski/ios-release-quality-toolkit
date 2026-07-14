@@ -18,6 +18,22 @@ EXPECTED_SKILLS = {
     "ios-ai-ui-check",
     "ios-ui-testability-contract",
 }
+MINIMUM_NODE24_MAJORS = {
+    "actions/checkout": 5,
+    "actions/setup-python": 6,
+    "actions/upload-artifact": 6,
+    "actions/download-artifact": 7,
+}
+ACTION_REFERENCE = re.compile(
+    r"^[ \t]*(?:-[ \t]*)?(?:uses|['\"]uses['\"]):[ \t]*['\"]?"
+    r"(?P<action>actions/[a-z0-9_-]+)@(?P<ref>[^'\"\s#]+)",
+    re.IGNORECASE | re.MULTILINE,
+)
+ACTION_MAJOR_REF = re.compile(r"v(?P<major>\d+)(?:\.\d+){0,2}\Z", re.IGNORECASE)
+BLOCK_SCALAR_START = re.compile(
+    r"^[ ]*(?:-[ ]*)?(?:[A-Za-z0-9_-]+|['\"][^'\"]+['\"]):"
+    r"[ ]*[|>][0-9+-]*[ ]*(?:#.*)?$"
+)
 
 
 def fail(message: str) -> None:
@@ -67,6 +83,59 @@ def plugin_file(value: object, field: str) -> Path:
     if not candidate.is_file():
         fail(f"plugin interface {field} does not resolve to a file")
     return candidate
+
+
+def action_references(text: str):
+    block_parent_indent: int | None = None
+    for line in text.splitlines():
+        stripped = line.strip()
+        indent = len(line) - len(line.lstrip(" "))
+
+        if block_parent_indent is not None:
+            if not stripped or indent > block_parent_indent:
+                continue
+            block_parent_indent = None
+
+        if BLOCK_SCALAR_START.match(line):
+            block_parent_indent = indent
+            continue
+
+        match = ACTION_REFERENCE.match(line)
+        if match:
+            yield match
+
+
+def reviewed_node24_major(action: str, ref: str, relative_path: str) -> int:
+    minimum = MINIMUM_NODE24_MAJORS.get(action)
+    if minimum is None:
+        fail(
+            f"{relative_path} uses {action} without a reviewed Node 24 minimum"
+        )
+    version = ACTION_MAJOR_REF.fullmatch(ref)
+    if version is None:
+        fail(
+            f"{relative_path} uses {action}@{ref}; "
+            "the ref requires explicit Node 24 review"
+        )
+    major = int(version.group("major"))
+    if major < minimum:
+        fail(
+            f"{relative_path} uses {action}@{ref}; "
+            f"Node 24 requires at least v{minimum}"
+        )
+    return major
+
+
+def validate_node24_action_references(action_surfaces: dict[str, str]) -> None:
+    checked_references = 0
+    for relative_path, text in action_surfaces.items():
+        for match in action_references(text):
+            action = match.group("action").lower()
+            checked_references += 1
+            reviewed_node24_major(action, match.group("ref"), relative_path)
+
+    if checked_references == 0:
+        fail("no GitHub Action references were checked for Node 24 compatibility")
 
 
 def validate() -> None:
@@ -129,6 +198,14 @@ def validate() -> None:
     for required in ("README.md", "LICENSE", "CITATION.cff", "llms.txt"):
         if not (ROOT / required).is_file():
             fail(f"missing public repository file: {required}")
+
+    workflow_root = ROOT / ".github" / "workflows"
+    action_surfaces = {
+        str(path.relative_to(ROOT)): path.read_text(encoding="utf-8")
+        for path in workflow_root.rglob("*")
+        if path.is_file() and path.suffix in {".yml", ".yaml"}
+    }
+    validate_node24_action_references(action_surfaces)
 
     public_paths = [
         ROOT / ".agents",
