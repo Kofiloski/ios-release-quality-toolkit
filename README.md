@@ -16,10 +16,10 @@ The toolkit packages three focused workflows:
 Add this repository as a Codex plugin marketplace:
 
 ```bash
-codex plugin marketplace add Kofiloski/ios-release-quality-toolkit --ref v0.1.0
+codex plugin marketplace add Kofiloski/ios-release-quality-toolkit --ref v0.1.1
 ```
 
-Then install **iOS Release Quality Toolkit** from the plugin directory. The command above pins the reviewed `v0.1.0` release; replace it deliberately when adopting a newer version.
+Then install **iOS Release Quality Toolkit** from the plugin directory. The command above pins the reviewed `v0.1.1` release; replace it deliberately when adopting a newer version.
 
 Validate a checkout without installing dependencies:
 
@@ -32,7 +32,7 @@ python3 -m unittest discover -s tests -v
 
 The toolkit presents all three projects as agent skills, but their executable delivery paths are different:
 
-- `app-store-review-risk` and `ios-ui-testability-contract` include Python CLIs, so their release workflows publish signed packages to PyPI in addition to GitHub releases.
+- `app-store-review-risk` and `ios-ui-testability-contract` include Python CLIs, so their release workflows publish attested packages to PyPI in addition to GitHub releases. This gives agents a short `uvx` path for one-off execution and users a clean `pipx` path for persistent installation; GitHub remains canonical for the skills and source.
 - `ios-ai-ui-check` is a GitHub Action and reusable workflow. A versioned GitHub release tag is its executable distribution: callers run `Kofiloski/ios-ai-ui-check@v0.3.0` or the matching reusable workflow directly from that ref. The toolkit bundles the agent-facing adoption and debugging guidance, not another copy of the action runtime.
 
 ## Ask naturally

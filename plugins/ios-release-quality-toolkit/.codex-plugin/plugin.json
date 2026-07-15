@@ -1,6 +1,6 @@
 {
   "name": "ios-release-quality-toolkit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Find App Store release risks, repair XCUITest testability failures, and add evidence-rich iOS Simulator checks.",
   "author": {
     "name": "Kristijan Kofiloski",

@@ -156,6 +156,15 @@ def validate() -> None:
         fail("plugin manifest name does not match the directory")
     if not re.fullmatch(r"\d+\.\d+\.\d+", str(manifest.get("version", ""))):
         fail("plugin version must be semantic MAJOR.MINOR.PATCH")
+    citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    citation_version = re.search(
+        r"^version:\s*[\"']?([^\"'\s]+)", citation, re.MULTILINE
+    )
+    if (
+        citation_version is None
+        or manifest.get("version") != citation_version.group(1)
+    ):
+        fail("plugin manifest and citation versions must match")
     if manifest.get("skills") != "./skills/":
         fail("plugin manifest must expose ./skills/")
 
