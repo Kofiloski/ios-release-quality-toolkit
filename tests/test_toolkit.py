@@ -30,6 +30,17 @@ class ToolkitTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     validator.plugin_file(path, "logo")
 
+    def test_tag_push_can_create_a_release_without_personal_auth(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn('tags:\n      - "v*.*.*"', workflow)
+        self.assertIn("contents: write", workflow)
+        self.assertIn("GH_TOKEN: ${{ github.token }}", workflow)
+        self.assertIn('gh release create "${RELEASE_TAG}"', workflow)
+        self.assertNotIn("secrets.", workflow)
+
     def test_node20_action_major_is_rejected(self) -> None:
         validator = load_validator()
 

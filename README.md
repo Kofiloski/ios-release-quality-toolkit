@@ -28,6 +28,8 @@ python3 scripts/check-toolkit.py
 python3 -m unittest discover -s tests -v
 ```
 
+Maintainers publish a version by pushing its exact `vX.Y.Z` tag. The tag workflow validates the plugin and creates the GitHub release with the built-in repository token, so no personal GitHub API or organization OAuth scope is required.
+
 ## Why The Projects Publish Differently
 
 The toolkit presents all three projects as agent skills, but their executable delivery paths are different:
