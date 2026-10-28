@@ -60,7 +60,7 @@ The tools provide engineering evidence, not a guarantee of App Store approval, a
 
 ## Canonical projects
 
-- [app-store-review-risk](https://github.com/Kofiloski/app-store-review-risk)
+- [app-store-review-risk](https://github.com/Kofiloski/app-store-review-risk) — [GitHub Marketplace](https://github.com/marketplace/actions/app-store-review-risk)
 - [ios-ui-testability-contract-skill](https://github.com/Kofiloski/ios-ui-testability-contract-skill)
-- [ios-ai-ui-check](https://github.com/Kofiloski/ios-ai-ui-check)
+- [ios-ai-ui-check](https://github.com/Kofiloski/ios-ai-ui-check) — [GitHub Marketplace](https://github.com/marketplace/actions/ios-ai-ui-check)
 - [Toolkit overview and policies](https://kofiloski.com/Tools)
