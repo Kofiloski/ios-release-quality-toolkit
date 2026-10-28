@@ -28,7 +28,7 @@ Use Xcode's native Simulator controls for focused local verification and the pub
 8. Inspect `summary.md`, `manifest.json`, logs, screenshots, video, and `.xcresult` together. Do not report success from a status dot when the evidence contradicts it.
 9. Keep fixes at the correct boundary:
    - reusable orchestration or artifact-contract defect -> fix `ios-ai-ui-check`
-   - element lookup, wrong element type, identifier collision, or unreachable route -> use `$ios-ui-testability-contract`
+   - element lookup, wrong element type, identifier collision, or unreachable route -> use `$ios-ui-testability-contract` if available; otherwise inspect the failing runner's UI tree, patch the app-side control identifier/exposure or launch route, and replay the exact failing test/scenario. The companion skill is optional.
    - app launch, data, interaction, or assertion logic -> fix the app-owned runner
 
 ## Guardrails

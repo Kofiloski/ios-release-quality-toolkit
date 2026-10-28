@@ -1,6 +1,6 @@
 {
   "name": "ios-release-quality-toolkit",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Review current App Store risks, repair XCUITest failures, and check Simulator UI with native Xcode tools or reproducible automation.",
   "author": {
     "name": "Kristijan Kofiloski",

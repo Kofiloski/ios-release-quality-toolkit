@@ -31,7 +31,7 @@ app-store-review-risk /path/to/app/repo
 The published skill bundle intentionally does not duplicate the scanner package. If the CLI is missing, use this release-pinned ephemeral command only when network installation is authorized and `uvx` is available:
 
 ```bash
-uvx --from app-store-review-risk==0.3.1 app-store-review-risk /path/to/app/repo
+uvx --from app-store-review-risk==0.3.2 app-store-review-risk /path/to/app/repo
 ```
 
 Do not install from an unpinned branch. If neither the CLI nor authorized network installation is available, continue with the target matrix and file-backed manual review, and state that the deterministic scanner was not run.

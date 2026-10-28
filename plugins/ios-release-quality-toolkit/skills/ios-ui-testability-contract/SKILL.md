@@ -42,7 +42,7 @@ Run these commands when the separately packaged `ios-ui-testability` CLI is inst
 If the CLI is missing, use this release-pinned ephemeral command only when network installation is authorized and `uvx` is available:
 
 ```bash
-uvx --from ios-ui-testability-contract==0.4.1 ios-ui-testability --help
+uvx --from ios-ui-testability-contract==0.4.2 ios-ui-testability --help
 ```
 
 - `ios-ui-testability ids`
