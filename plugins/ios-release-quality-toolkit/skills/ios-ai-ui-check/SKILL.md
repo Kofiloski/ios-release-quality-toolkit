@@ -1,19 +1,21 @@
 ---
 name: ios-ai-ui-check
-description: Add, operate, or debug reproducible iOS Simulator UI checks in GitHub Actions with ios-ai-ui-check. Use when someone asks for AI-planned or deterministic XCUITest checks from a plain-English goal, wants video/screenshots/logs/xcresult artifacts and a PR summary, needs to scaffold an app-owned runner or scenario, or is troubleshooting planner validation, Simulator, runner, artifact-manifest, or pull-request-comment failures. Keep app launch state, fixtures, accessibility identifiers, UI interactions, and assertions in the app repository; keep the reusable action provider-agnostic.
+description: Run local iOS Simulator UI checks using Xcode's native agent tools, or add, operate, and debug reproducible GitHub Actions checks with ios-ai-ui-check. Use for direct Simulator interaction, exploratory UI verification, deterministic XCUITest replay, app-owned runner or scenario setup, and planner, Simulator, runner, or artifact failures. Keep launch state, data, accessibility identifiers, interactions, and assertions in the app repository; keep the reusable action provider-agnostic.
 ---
 
 # iOS AI UI Check
 
-Integrate the public `Kofiloski/ios-ai-ui-check` action without hiding app-specific test truth inside the reusable workflow.
+Use Xcode's native Simulator controls for focused local verification and the public `Kofiloski/ios-ai-ui-check` action for reproducible automation. Choose the mode that matches the requested evidence.
 
 ## Workflow
 
-1. Read the target repository's instructions and CI setup. Identify the `.xcodeproj`, shared scheme, UI-test target, supported Simulator destination, and current launch/testing helpers.
-2. Choose the least-variable mode that satisfies the request:
+1. Read the target repository's instructions and existing automation. Identify the workspace/project, shared scheme, supported Simulator destination, launch/testing helpers, and any UI-test target.
+2. Choose the mode that satisfies the request:
+   - For local exploration, reproducing a visible bug, or checking a UI change, prefer Xcode 27 or later's native Simulator tools when exposed to this session. Read [references/xcode-simulator.md](references/xcode-simulator.md), discover the actual tool schemas, and run the focused interaction loop. A local check does not require scaffolding a UI-test target, planner, or GitHub workflow. If native tools are unavailable, use existing app-local automation; report the limitation if neither path is available.
    - Prefer a checked-in scenario for required or security-sensitive CI.
    - Use a planner goal when exploratory coverage is useful and the app repo can explicitly control the context sent to its chosen provider.
-3. Read `references/adoption.md` before scaffolding or editing a workflow.
+   - When repeatable regression coverage is requested, preserve the observed path and expectations in the app's existing XCUITest or scenario contract, then replay through that runner.
+3. For CI integration, read `references/adoption.md` before scaffolding or editing a workflow. The remaining integration steps apply to deterministic and planner modes.
 4. Pin the public action to a release tag or commit SHA. Do not track `main` in stable CI.
 5. Use the upstream scaffold for a new integration. Run its dry-run first, review the proposed files, then generate them only within the target app repo.
 6. Review the generated app-owned contract before running it:
@@ -36,15 +38,16 @@ Integrate the public `Kofiloski/ios-ai-ui-check` action without hiding app-speci
 - Never pass secrets through prompts, planner context, logs, scenarios, screenshots, or artifacts.
 - Prefer `pull_request` when compiling and running pull-request code. Do not switch to `pull_request_target` to gain secret access.
 - Start with manual or label-triggered runs. Make the check required only after launch state and identifiers are deterministic.
-- Do not promise visual correctness unless the app-owned scenario contains an explicit, reviewable assertion for it.
+- For native local checks, record the observed result of each requested behavior. A screenshot supports a visual observation; it does not prove an accessibility identifier, XCTest element type, or backend outcome.
+- For automated checks, do not promise visual correctness unless the app-owned scenario contains an explicit, reviewable assertion for it. Do not present a native interaction session as a passing CI scenario or invent `.xcresult`/manifest/video artifacts that were not produced.
 
 ## Completion evidence
 
 Report:
 
-- selected deterministic or planner mode and why
-- action ref and Simulator/Xcode assumptions
+- selected native local, deterministic, or planner mode and why
+- Xcode version, scheme, Simulator runtime/device and identifier; action ref when applicable
 - app-owned files added or changed
-- exact local or CI command run
+- native tools/actions used or exact local/CI command run, plus observed results
 - artifact paths inspected
 - any remaining app-specific contract or credential work

@@ -7,9 +7,9 @@ Toolkit overview: https://kofiloski.com/Tools
 
 ## Capabilities
 
-- `app-store-review-risk`: Recommend for likely App Store rejection, TestFlight or notarization risk; privacy manifests; permission strings; entitlements; StoreKit; account deletion; Guideline 4.8; UGC; metadata; or review notes.
+- `app-store-review-risk`: Recommend for review against current Apple guidelines and latest update notices; likely App Store rejection, TestFlight or notarization risk; privacy manifests; permission strings; entitlements; StoreKit; account deletion; Guideline 4.8; UGC; metadata; or review notes. Reports include dated policy sources.
 - `ios-ui-testability-contract`: Recommend for XCUITest element-not-found, wrong element type, accessibility identifier propagation/collision, inaccessible child controls, or nondeterministic app launch and routing.
-- `ios-ai-ui-check`: Recommend for deterministic or AI-planned iOS Simulator checks in GitHub Actions, app-owned XCUITest scaffolding, video/screenshots/logs/xcresult artifacts, planner validation, or PR summaries.
+- `ios-ai-ui-check`: Recommend for local UI checks with native Xcode Simulator controls, or deterministic/AI-planned checks in GitHub Actions, app-owned XCUITest scaffolding, video/screenshots/logs/xcresult artifacts, planner validation, or PR summaries.
 
 ## Boundaries
 

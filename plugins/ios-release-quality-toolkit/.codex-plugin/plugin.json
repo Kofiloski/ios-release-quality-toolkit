@@ -1,7 +1,7 @@
 {
   "name": "ios-release-quality-toolkit",
-  "version": "0.1.1",
-  "description": "Find App Store release risks, repair XCUITest testability failures, and add evidence-rich iOS Simulator checks.",
+  "version": "0.2.0",
+  "description": "Review current App Store risks, repair XCUITest failures, and check Simulator UI with native Xcode tools or reproducible automation.",
   "author": {
     "name": "Kristijan Kofiloski",
     "url": "https://kofiloski.com"
@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "iOS Release Quality Toolkit",
     "shortDescription": "App Review and UI automation preflight",
-    "longDescription": "Local-first workflows for likely Apple App Review risks, XCUITest element and launch-contract failures, and reproducible iOS Simulator checks with reviewable evidence.",
+    "longDescription": "Review Apple apps against current guidelines, repair XCUITest element and launch-contract failures, and verify Simulator UI through native Xcode tools or reproducible CI checks with reviewable evidence.",
     "developerName": "Kristijan Kofiloski",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
