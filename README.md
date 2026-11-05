@@ -13,15 +13,19 @@ The toolkit packages three focused workflows:
 
 Native checks use Xcode tools already exposed to the agent. For external agents, Apple's [MCP setup](https://developer.apple.com/documentation/xcode/giving-external-agents-access-to-xcode) requires opening the project in Xcode, allowing external agents in Intelligence settings, and connecting through `xcrun mcpbridge`. The toolkit does not configure an MCP server during installation. If native controls are unavailable, the skills use existing app-local automation and report any verification gap.
 
+When a visible result needs explanation, the skills correlate the reproduction with bounded app logs, relevant saved state, and focused debugger observations using existing Simulator tooling. Raw app state stays local; instrumented observations remain separate from normal test results. See the [Ice Cubes test-app plan](docs/simulator-test-app.md) for a source-backed evaluation flow and its current verification status.
+
+The local verification baseline is Xcode/XCTest and Apple's command-line tools. AXe, third-party MCP servers, and companion CLIs are optional integrations whose availability must be checked; installing the toolkit does not supply or require them.
+
 ## Install from GitHub
 
 Add this repository as a Codex plugin marketplace:
 
 ```bash
-codex plugin marketplace add Kofiloski/ios-release-quality-toolkit --ref v0.2.1
+codex plugin marketplace add Kofiloski/ios-release-quality-toolkit --ref v0.2.2
 ```
 
-Then install **iOS Release Quality Toolkit** from the plugin directory. The command above pins the reviewed `v0.2.1` release; replace it deliberately when adopting a newer version.
+Then install **iOS Release Quality Toolkit** from the plugin directory. The command above pins the reviewed `v0.2.2` release; replace it deliberately when adopting a newer version.
 
 Validate a checkout without installing dependencies:
 
@@ -37,7 +41,7 @@ Maintainers publish a version by pushing its exact `vX.Y.Z` tag. The tag workflo
 The toolkit presents all three projects as agent skills, but their executable delivery paths are different:
 
 - `app-store-review-risk` and `ios-ui-testability-contract` include Python CLIs, so their release workflows publish attested packages to PyPI in addition to GitHub releases. This gives agents a short `uvx` path for one-off execution and users a clean `pipx` path for persistent installation; GitHub remains canonical for the skills and source.
-- `ios-ai-ui-check` is a GitHub Action and reusable workflow. A versioned GitHub release tag is its executable distribution: callers run `Kofiloski/ios-ai-ui-check@v0.4.0` or the matching reusable workflow directly from that ref. Its repository also publishes the installable Agent Skill. The toolkit embeds that guidance, not another copy of the action runtime.
+- `ios-ai-ui-check` is a GitHub Action and reusable workflow. A versioned GitHub release tag is its executable distribution: callers run `Kofiloski/ios-ai-ui-check@v0.5.0` or the matching reusable workflow directly from that ref. Its repository also publishes the installable Agent Skill. The toolkit embeds that guidance, not another copy of the action runtime.
 
 ## Ask naturally
 
