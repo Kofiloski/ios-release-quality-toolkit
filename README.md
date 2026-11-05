@@ -22,10 +22,10 @@ The local verification baseline is Xcode/XCTest and Apple's command-line tools. 
 Add this repository as a Codex plugin marketplace:
 
 ```bash
-codex plugin marketplace add Kofiloski/ios-release-quality-toolkit --ref v0.2.2
+codex plugin marketplace add Kofiloski/ios-release-quality-toolkit --ref v0.2.3
 ```
 
-Then install **iOS Release Quality Toolkit** from the plugin directory. The command above pins the reviewed `v0.2.2` release; replace it deliberately when adopting a newer version.
+Then install **iOS Release Quality Toolkit** from the plugin directory. The command above pins the reviewed `v0.2.3` release; replace it deliberately when adopting a newer version.
 
 Validate a checkout without installing dependencies:
 
@@ -41,7 +41,17 @@ Maintainers publish a version by pushing its exact `vX.Y.Z` tag. The tag workflo
 The toolkit presents all three projects as agent skills, but their executable delivery paths are different:
 
 - `app-store-review-risk` and `ios-ui-testability-contract` include Python CLIs, so their release workflows publish attested packages to PyPI in addition to GitHub releases. This gives agents a short `uvx` path for one-off execution and users a clean `pipx` path for persistent installation; GitHub remains canonical for the skills and source.
-- `ios-ai-ui-check` is a GitHub Action and reusable workflow. A versioned GitHub release tag is its executable distribution: callers run `Kofiloski/ios-ai-ui-check@v0.5.0` or the matching reusable workflow directly from that ref. Its repository also publishes the installable Agent Skill. The toolkit embeds that guidance, not another copy of the action runtime.
+- `ios-ai-ui-check` is a GitHub Action and reusable workflow. A versioned GitHub release tag is its executable distribution: callers run `Kofiloski/ios-ai-ui-check@v0.6.0` or the matching reusable workflow directly from that ref. Its repository also publishes the installable Agent Skill. The toolkit embeds that guidance, not another copy of the action runtime.
+
+## Choose the UI planner
+
+UI Check `v0.6.0` supports native Anthropic and OpenAI planners, plus an explicitly configured OpenAI-compatible endpoint. Select the provider, model, and effort in the app-owned integration:
+
+```bash
+./scripts/local-ai-ui-check.sh --provider anthropic --model claude-sonnet-4-6 --effort high --goal "Verify settings persist"
+```
+
+Set `ANTHROPIC_API_KEY` for this example. The matching action inputs are `planner-provider`, `planner-model`, and `planner-effort`. Effort support varies by model; API rejections are preserved without silently changing the requested settings. Existing apps need a scaffold refresh and a `v0.6.0` action pin. These settings configure the optional planner, independently of the coding agent running the skills. Deterministic scenarios and local scanners need no model key. See the [pinned configuration guide](https://github.com/Kofiloski/ios-ai-ui-check/blob/v0.6.0/docs/planner-configuration.md).
 
 ## Ask naturally
 
@@ -55,6 +65,7 @@ The skill descriptions are written to trigger from concrete problems, including:
 - "Use Xcode's native tools to tap through this flow and capture the result."
 - "Review this release against Apple's latest guideline changes."
 - "Why did the AI UI planner reject this scenario?"
+- "Use Anthropic with claude-sonnet-4-6 at high effort for UI planning."
 
 ## Trust boundary
 

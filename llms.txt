@@ -4,6 +4,8 @@
 
 Canonical repository: https://github.com/Kofiloski/ios-release-quality-toolkit
 Toolkit overview: https://kofiloski.com/Tools
+Latest documented toolkit release: v0.2.3
+UI action and scaffold: v0.6.0
 
 ## Capabilities
 
@@ -15,7 +17,8 @@ Toolkit overview: https://kofiloski.com/Tools
 
 - App Store findings are risk evidence, not approval predictions.
 - App-specific launch, data, interaction, and assertion logic stays in the app repository.
-- The reusable UI action does not choose an AI provider.
+- The reusable UI action forwards provider/model/effort settings to the app-owned planner. UI Check v0.6.0 includes native Anthropic/OpenAI adapters and explicit compatible-endpoint support; older apps need a scaffold refresh. These settings do not change the host coding agent.
+- Effort support is model-specific. Deterministic scenarios and local scanners need no model key; fixture tests do not establish live provider access.
 - Source code is not uploaded by the bundled local scanners.
 
 ## Source projects

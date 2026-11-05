@@ -51,7 +51,7 @@ The public project nevertheless attaches a missing `scripts/internal/replace_obf
 
 ## Proposed rollout
 
-1. Pin the published UI Action `v0.5.0` or its reviewed commit. Explicit release inputs are available in that version; review and refresh app-owned scaffold files before adopting the new runner/planner behavior.
+1. Pin UI Action `v0.6.0` or its reviewed commit. Explicit release inputs and provider/model/effort selection are available in that version; review and refresh app-owned scaffold files before adopting the new runner/planner behavior.
 2. Create independent benchmark forks with upstream attribution. Keep the upstream app revision, harness revision and local integration changes distinguishable.
 3. Inspect existing app-owned tests, launch hooks, fixtures and build scripts before scaffolding. Reuse native XCTest and explicit prerequisites; do not assume AXe, Maestro, or another optional inspector is installed.
 4. Prove a manual hosted build and a meaningful deterministic UI assertion for each selected app. Preserve build failures and missing prerequisites instead of reporting an empty launch/screenshot check as coverage. Static review scans do not establish a UI pass.
