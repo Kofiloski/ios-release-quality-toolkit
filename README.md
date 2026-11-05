@@ -3,79 +3,43 @@
 [![CI](https://github.com/Kofiloski/ios-release-quality-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/Kofiloski/ios-release-quality-toolkit/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-A skills-only plugin for finding likely App Store release risks, repairing XCUITest testability failures, and checking iOS UI through native Xcode Simulator tools or reproducible automation.
+Three agent skills for reviewing Apple release risks, repairing XCUITest failures, and checking iOS Simulator UI.
 
-The toolkit packages three focused workflows:
+| Skill | Use it to |
+| --- | --- |
+| [App Store Review Risk](https://github.com/Kofiloski/app-store-review-risk) | Review likely submission risks against current Apple guidance. |
+| [UI Testability Contract](https://github.com/Kofiloski/ios-ui-testability-contract-skill) | Fix element lookup, identifier, and deterministic launch failures. |
+| [iOS AI UI Check](https://github.com/Kofiloski/ios-ai-ui-check) | Run focused native checks or app-owned Simulator scenarios in CI. |
 
-- **App Store Review Risk** — fetch Apple's current guidelines and latest update notice, then inspect an Xcode repository or PR for privacy, entitlements, StoreKit, account deletion, metadata, notarization, and other likely Apple review risks. Reports identify the policy revision, retrieval date, and sources; offline reviews disclose what still needs verification.
-- **iOS UI Testability Contract** — diagnose `element not found`, wrong-element-type, accessibility-identifier collision, and nondeterministic launch-route failures in SwiftUI and UIKit.
-- **iOS AI UI Check** — use Xcode 27 or later's native agent tools for focused local Simulator interaction, or add/debug provider-agnostic CI checks with screenshots, video, logs, `.xcresult`, an artifact manifest, and a managed PR summary. Local exploration uses the evidence available from its tools; repeatable regression coverage stays in app-owned tests and scenarios.
+## Install
 
-Native checks use Xcode tools already exposed to the agent. For external agents, Apple's [MCP setup](https://developer.apple.com/documentation/xcode/giving-external-agents-access-to-xcode) requires opening the project in Xcode, allowing external agents in Intelligence settings, and connecting through `xcrun mcpbridge`. The toolkit does not configure an MCP server during installation. If native controls are unavailable, the skills use existing app-local automation and report any verification gap.
-
-When a visible result needs explanation, the skills correlate the reproduction with bounded app logs, relevant saved state, and focused debugger observations using existing Simulator tooling. Raw app state stays local; instrumented observations remain separate from normal test results. See the [Ice Cubes test-app plan](docs/simulator-test-app.md) for a source-backed evaluation flow and its current verification status.
-
-The local verification baseline is Xcode/XCTest and Apple's command-line tools. AXe, third-party MCP servers, and companion CLIs are optional integrations whose availability must be checked; installing the toolkit does not supply or require them.
-
-## Install from GitHub
-
-Add this repository as a Codex plugin marketplace:
+Add the release-pinned Codex plugin marketplace:
 
 ```bash
 codex plugin marketplace add Kofiloski/ios-release-quality-toolkit --ref v0.2.3
 ```
 
-Then install **iOS Release Quality Toolkit** from the plugin directory. The command above pins the reviewed `v0.2.3` release; replace it deliberately when adopting a newer version.
-
-Validate a checkout without installing dependencies:
-
-```bash
-python3 scripts/check-toolkit.py
-python3 -m unittest discover -s tests -v
-```
-
-Maintainers publish a version by pushing its exact `vX.Y.Z` tag. The tag workflow validates the plugin and creates the GitHub release with the built-in repository token, so no personal GitHub API or organization OAuth scope is required.
-
-## Why The Projects Publish Differently
-
-The toolkit presents all three projects as agent skills, but their executable delivery paths are different:
-
-- `app-store-review-risk` and `ios-ui-testability-contract` include Python CLIs, so their release workflows publish attested packages to PyPI in addition to GitHub releases. This gives agents a short `uvx` path for one-off execution and users a clean `pipx` path for persistent installation; GitHub remains canonical for the skills and source.
-- `ios-ai-ui-check` is a GitHub Action and reusable workflow. A versioned GitHub release tag is its executable distribution: callers run `Kofiloski/ios-ai-ui-check@v0.6.0` or the matching reusable workflow directly from that ref. Its repository also publishes the installable Agent Skill. The toolkit embeds that guidance, not another copy of the action runtime.
-
-## Choose the UI planner
-
-UI Check `v0.6.0` supports native Anthropic and OpenAI planners, plus an explicitly configured OpenAI-compatible endpoint. Select the provider, model, and effort in the app-owned integration:
-
-```bash
-./scripts/local-ai-ui-check.sh --provider anthropic --model claude-sonnet-4-6 --effort high --goal "Verify settings persist"
-```
-
-Set `ANTHROPIC_API_KEY` for this example. The matching action inputs are `planner-provider`, `planner-model`, and `planner-effort`. Effort support varies by model; API rejections are preserved without silently changing the requested settings. Existing apps need a scaffold refresh and a `v0.6.0` action pin. These settings configure the optional planner, independently of the coding agent running the skills. Deterministic scenarios and local scanners need no model key. See the [pinned configuration guide](https://github.com/Kofiloski/ios-ai-ui-check/blob/v0.6.0/docs/planner-configuration.md).
+Then install **iOS Release Quality Toolkit** from the plugin directory. Individual skills are also available from their canonical repositories for compatible coding agents.
 
 ## Ask naturally
 
-The skill descriptions are written to trigger from concrete problems, including:
-
-- "Will Apple reject this build?"
-- "Check this PR's privacy manifest and StoreKit risks."
-- "XCUITest can see the button, but element lookup fails."
-- "The accessibility identifier resolves to a VStack instead of the TextField."
-- "Add a deterministic iOS Simulator check to this pull request."
-- "Use Xcode's native tools to tap through this flow and capture the result."
-- "Review this release against Apple's latest guideline changes."
-- "Why did the AI UI planner reject this scenario?"
+- "Review this iOS app for likely App Store rejection risks."
+- "Fix this XCUITest element-not-found failure."
+- "Verify this UI flow locally and preserve it as a regression test."
 - "Use Anthropic with claude-sonnet-4-6 at high effort for UI planning."
 
-## Trust boundary
+UI Check v0.6.0 supports explicit provider, model, and effort settings. Existing app integrations need a scaffold refresh and updated action pin; installing the toolkit does not update app scripts or change the host coding-agent session.
 
-The scanner workflows run locally and do not upload repository contents. Policy reviews retrieve public Apple guidance. Native UI checks use the agent's existing Xcode connection and permissions. The `ios-ai-ui-check` reusable action is provider-agnostic; only an app-owned planner command can choose an external model provider and decide what context it receives. Review all generated changes, workflows, prompts, artifacts, and third-party credentials before use.
+## Requirements and limits
 
-The tools provide engineering evidence, not a guarantee of App Store approval, accessibility compliance, or defect-free software.
+This is a skills-only bundle. It does not install scanners, Xcode connections, or third-party inspectors. The local baseline uses Xcode/XCTest and Apple's command-line tools. Deterministic scenarios and local scanners need no model key; optional AI planning uses the provider chosen by the app repository.
 
-## Canonical projects
+The skills produce engineering evidence, not a guarantee of App Store approval or complete UI coverage. [Setup, planner configuration, privacy, and delivery channels](docs/usage.md).
 
-- [app-store-review-risk](https://github.com/Kofiloski/app-store-review-risk) — [GitHub Marketplace](https://github.com/marketplace/actions/app-store-review-risk)
-- [ios-ui-testability-contract-skill](https://github.com/Kofiloski/ios-ui-testability-contract-skill)
-- [ios-ai-ui-check](https://github.com/Kofiloski/ios-ai-ui-check) — [GitHub Marketplace](https://github.com/marketplace/actions/ios-ai-ui-check)
-- [Toolkit overview and policies](https://kofiloski.com/Tools)
+## Documentation
+
+- [Using the toolkit](docs/usage.md): native setup, planner choices, example requests, and trust boundaries.
+- [Skill maintenance](docs/skill-maintenance.md): canonical bundles, validation, and publication.
+- [Ice Cubes evaluation](docs/simulator-test-app.md) and [popular-app status](docs/popular-app-benchmarks.md): actual evidence and remaining gaps.
+
+MIT licensed. [Website and policies](https://kofiloski.com/Tools) · [Agent discovery](llms.txt) · [Citation metadata](CITATION.cff).

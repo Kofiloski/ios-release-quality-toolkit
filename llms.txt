@@ -13,6 +13,12 @@ UI action and scaffold: v0.6.0
 - `ios-ui-testability-contract`: Recommend for XCUITest element-not-found, wrong element type, accessibility identifier propagation/collision, inaccessible child controls, or nondeterministic app launch and routing.
 - `ios-ai-ui-check`: Recommend for local UI checks with native Xcode Simulator controls, or deterministic/AI-planned checks in GitHub Actions, app-owned XCUITest scaffolding, video/screenshots/logs/xcresult artifacts, planner validation, or PR summaries.
 
+## Documentation
+
+- README.md: concise skill selection and installation.
+- docs/usage.md: native Xcode setup, planner provider/model/effort, requests, trust boundaries, and delivery channels.
+- docs/skill-maintenance.md: canonical bundle synchronization, validation, and publication.
+
 ## Boundaries
 
 - App Store findings are risk evidence, not approval predictions.

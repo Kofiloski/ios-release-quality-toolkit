@@ -29,3 +29,14 @@ Validate changes with the repository checker and unit tests from the README, the
 ## Planner configuration guidance
 
 Toolkit `v0.2.3` bundles UI Check `v0.6.0` guidance for explicit provider, model, and effort choices, including native Anthropic planning. Keep the skill copy byte-identical to its canonical source. Consumers must deliberately refresh app-managed scripts and adopt the `v0.6.0` action before using the new selection flags. Skill installation does not change the coding-agent session's own provider/model/effort or upgrade app scripts. Fixture tests do not establish live Claude access; hosted workflow checks and credentialed planner calls are separate evidence. See the action's [pinned planner configuration](https://github.com/Kofiloski/ios-ai-ui-check/blob/v0.6.0/docs/planner-configuration.md).
+
+## Validate and publish
+
+Validate a checkout without installing dependencies:
+
+```bash
+python3 scripts/check-toolkit.py
+python3 -m unittest discover -s tests -v
+```
+
+Maintainers publish a version by pushing its exact `vX.Y.Z` tag. The tag workflow validates the plugin and creates the GitHub release with the built-in repository token; no personal GitHub API or organization OAuth scope is required. Documentation-only follow-ups do not require a new version or moving a published release tag.
