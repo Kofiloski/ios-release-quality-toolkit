@@ -6,9 +6,13 @@ Use this reference when the app's existing build and test setup has not yet been
 
 Read the selected scheme's build/test preactions and postactions, test plan, target shell phases, and the scripts they invoke before running them. A Simulator destination only scopes Xcode's destination: a shell script can still modify every booted Simulator, install global tools, or format source files.
 
+Inspect explicit `BuildAction` entries and `TestAction/Testables` as well as the selected test plan. A focused plan or `-only-testing` selector can still compile unrelated targets retained in the scheme; check the resulting dependency graph when preparing an app/UI-only path.
+
 If an action affects unrelated devices or host setup, prepare an app-owned local scheme or runner that scopes the operation to the selected destination. Preserve required dependency preparation and code generation explicitly, and record deviations from the upstream scheme. Do not remove a required build step merely to obtain a green result.
 
 Keep Xcode selection command-scoped with `DEVELOPER_DIR`. Confirm the actual test action as well as the scheme name; a Swift package's library scheme may build while its package scheme owns the tests. Match the destination to the imported frameworks: a package's declared macOS support does not prove its current sources compile for the host.
+
+Keep project-file edits reviewable. If a scaffold rewrites an entire native project file into another format, preserve the original format when practical and verify that the parsed project content still matches the intended target changes.
 
 ## Establish the public build prerequisites
 
@@ -23,6 +27,10 @@ Inspect submodules, LFS references, generated assets, and bootstrap scripts for 
 ## Choose a focused verification path
 
 Inspect existing tests, launch arguments, fixtures, and accessibility queries before creating a target. Prefer a meaningful existing flow selected with `-only-testing` when it exercises the requested behavior. Avoid inheriting release, deployment, or notification workflows just to run a local test.
+
+Validate explicit release comparison refs and the checked-out head before an expensive build. A default-branch-only fork may omit a release or hotfix commit even when checkout requests full history. Fetch the caller's pinned upstream commits explicitly when needed, and reuse `ai_ui_contract.py prepare-change-context` for a fast preflight; do not weaken the action's comparison validation or fall back to another commit.
+
+For an app that needs App Groups or keychain access groups at startup, do not assume `CODE_SIGNING_ALLOWED=NO` produces a runnable Simulator build. Inspect the launch failure and generated Simulator entitlements. Where supported, command-scoped ad hoc signing can retain the required entitlements without a developer certificate. Match the application identifier prefix to the app's actual keychain-group configuration and verify the real launch afterward. Do not remove storage assertions or substitute persistence to hide a signing/configuration failure; package unit tests that do not need these capabilities may still run unsigned.
 
 Check disk headroom before dependency resolution and builds. On a constrained host, run apps sequentially and retain logs, source revisions, integration diffs, and `.xcresult` evidence before arranging cleanup of regenerable products. Existing cleanup authorization and the host's cleanup rules still apply; do not remove active runtimes, source edits, or release evidence to make a test fit.
 
