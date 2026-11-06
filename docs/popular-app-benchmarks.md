@@ -76,3 +76,33 @@ The public project nevertheless attaches a missing `scripts/internal/replace_obf
 GitHub's [Xcode 27 runner inventory](https://github.com/actions/runner-images/blob/main/images/macos/xcode-27-arm64-Readme.md) includes Xcode 27.1 and iOS 27 runtimes as inspected on November 5. The Proton example selects `xcode-27` and Xcode 27.1 explicitly. Verify the supported runner label and installed versions at implementation time; do not assume the ordinary macOS 26 runner contains that Xcode version. Match each pinned app revision to an available toolchain and record the observed preflight.
 
 The machine-readable assessment is stored outside the distributable bundle in the sibling `test-results/popular-ios-apps-2026-11-04/assessment.json` directory. No source code, dependencies, credentials, or app data were downloaded into the toolkit.
+
+## Release-diff generation
+
+The three forks now have a separate `skills-release-regression.yml` workflow,
+pinned to the reviewed, unreleased action implementation
+`dab4bf21292cf229dbaf8a443bc56789794f0f6e`. It discovers stable iOS tags, compares
+immutable previous/new commits, applies only the app-owned harness, and generates
+new JSON scenarios for native XCTest. Cases cite changed files; uncovered changes
+remain explicit. The fixed baseline passes above remain separate evidence.
+
+The implementation separates uncredentialed app builds/tests from credentialed
+planning and write-enabled publication. Reports and evidence are retained as
+immutable attempt assets on each fork's `ui-check-*` releases. `ui-check-state`
+persists a queue, including later hotfixes. First discovery starts at the latest
+pair; manual inputs replay older pairs. Daily polling remains disabled until
+`ENABLE_RELEASE_CHECKS=true` is configured after a reviewed live run.
+
+| Fork | Credential-gate verification | Selected pair |
+| --- | --- | --- |
+| [Kofiloski/ios-pass](https://github.com/Kofiloski/ios-pass) | [Blocked as expected; report archived](https://github.com/Kofiloski/ios-pass/actions/runs/42296867037) | 1.22.1 → 1.23.0 |
+| [Kofiloski/firefox-ios](https://github.com/Kofiloski/firefox-ios) | [Blocked as expected; report archived](https://github.com/Kofiloski/firefox-ios/actions/runs/42296868891) | firefox-v159.1 → firefox-v160.0 |
+| [Kofiloski/apple-browsers](https://github.com/Kofiloski/apple-browsers) | [Blocked as expected; report archived](https://github.com/Kofiloski/apple-browsers/actions/runs/42296870893) | 7.243.0+ios → 7.244.0+ios |
+
+These hosted runs skipped macOS and generation because no model key is configured.
+They verified discovery, missing-key gating and durable report publication,
+not generated test quality or a new release's native UI pass. The action's 131
+maintenance tests passed locally, including generic Swift SDK typechecking;
+fixture provider transport is separate from live Anthropic/OpenAI access. See the
+[action release-flow documentation](https://github.com/Kofiloski/ios-ai-ui-check/blob/main/docs/release-regressions.md)
+and each fork's setup instructions before enabling scheduling.
