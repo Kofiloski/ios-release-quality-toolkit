@@ -90,8 +90,12 @@ The implementation separates uncredentialed app builds/tests from credentialed
 planning and write-enabled publication. Reports and evidence are retained as
 immutable attempt assets on each fork's `ui-check-*` releases. `ui-check-state`
 persists a queue, including later hotfixes. First discovery starts at the latest
-pair; manual inputs replay older pairs. Daily polling remains disabled until
-`ENABLE_RELEASE_CHECKS=true` is configured after a reviewed live run.
+pair; manual inputs replay older pairs. Daily polling was enabled on all three
+forks on November 7, 2026 (Europe/Skopje), at the owner's explicit request:
+`ENABLE_RELEASE_CHECKS=true`, with each workflow active on `skills-showcase`.
+The schedule polls at 07:17 UTC daily. No planner key is configured, so new
+comparisons produce blocked reports and skip macOS work until credentials are
+supplied. Enabling the schedule does not establish live generated UI coverage.
 
 | Fork | Credential-gate verification | Selected pair |
 | --- | --- | --- |
