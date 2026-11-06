@@ -81,7 +81,7 @@ The machine-readable assessment is stored outside the distributable bundle in th
 
 The three forks now have a separate `skills-release-regression.yml` workflow,
 pinned to the reviewed, unreleased action implementation
-`dab4bf21292cf229dbaf8a443bc56789794f0f6e`. It discovers stable iOS tags, compares
+`fec98e75076c9f07aa9c47b017b6998d64b98d19`. It discovers stable iOS tags, compares
 immutable previous/new commits, applies only the app-owned harness, and generates
 new JSON scenarios for native XCTest. Cases cite changed files; uncovered changes
 remain explicit. The fixed baseline passes above remain separate evidence.
@@ -101,8 +101,16 @@ pair; manual inputs replay older pairs. Daily polling remains disabled until
 
 These hosted runs skipped macOS and generation because no model key is configured.
 They verified discovery, missing-key gating and durable report publication,
-not generated test quality or a new release's native UI pass. The action's 131
+not generated test quality or a new release's native UI pass. The action's 132
 maintenance tests passed locally, including generic Swift SDK typechecking;
 fixture provider transport is separate from live Anthropic/OpenAI access. See the
 [action release-flow documentation](https://github.com/Kofiloski/ios-ai-ui-check/blob/main/docs/release-regressions.md)
 and each fork's setup instructions before enabling scheduling.
+
+Release harness preflight passed for Proton and Firefox. DuckDuckGo's stable
+release reorders PBX objects, so a snapshot-context patch failed before any build.
+Its release profile now prepares that file with an app-owned helper, preserving
+all parsed settings except private-font removal and two Debug Simulator overrides.
+That helper passed against both source snapshots, and the remaining overlay
+applies cleanly. This source preparation is separate from a full release build or
+live model-generated UI execution.
