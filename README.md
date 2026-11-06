@@ -5,6 +5,8 @@
 
 Three agent skills for reviewing Apple release risks, repairing XCUITest failures, and checking iOS Simulator UI.
 
+See UI Check running in [Proton Pass](https://github.com/Kofiloski/ios-pass), [Firefox](https://github.com/Kofiloski/firefox-ios), and [DuckDuckGo](https://github.com/Kofiloski/apple-browsers). [Verified results and coverage](docs/popular-app-benchmarks.md).
+
 | Skill | Use it to |
 | --- | --- |
 | [App Store Review Risk](https://github.com/Kofiloski/app-store-review-risk) | Review likely submission risks against current Apple guidance. |
