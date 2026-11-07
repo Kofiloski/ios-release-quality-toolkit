@@ -148,6 +148,11 @@ provider-generated case. The fresh hosted checkout establishes cold CI
 reproducibility; a measured fresh-user onboarding study and a complete unattended
 diff-generated release run remain outstanding.
 
+The original cold build took 32 minutes 51 seconds and the whole three-variant
+native job took 59 minutes 10 seconds. This is a manual proof workload, not the
+daily release poll or an ordinary single-case run. Its timeout now allows 75
+minutes; peak disk use and independent-user setup time were not measured.
+
 The two reviewed pipeline defects are fixed in the pinned runtime: force-latest
 selection now precedes the ordinary pending queue, and release descriptions link
 the newest published attempt after its assets upload. Regression tests cover
