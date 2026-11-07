@@ -7,7 +7,13 @@ read_when:
 
 # Popular iOS showcase forks
 
-Status: Updated November 6, 2026. All three independent forks now have passing hosted builds and meaningful native UI tests. Downloaded XCTest results verify **three UI tests plus five Proton PRF model tests**, with zero failures or skips. Proton and Firefox also passed locally. DuckDuckGo's local build remains limited by disk space; its hosted keyboard-preference persistence check passed. These are focused native baselines, with no live AI planning or claim of release-wide coverage.
+Status: Updated November 7, 2026. DuckDuckGo is the active behavioral flagship;
+Proton Pass and Firefox are frozen integration references with manual workflows.
+The original hosted baselines verified **three UI tests plus five Proton PRF unit
+tests**, with zero failures or skips. Their native evidence is now permanently
+archived. DuckDuckGo also completed an independently verified controlled
+pass-fail-pass demonstration. These are native execution and failure-sensitivity
+results, with no live unattended AI planning or release-wide coverage claim.
 
 The selected apps are Firefox, DuckDuckGo, and Proton Pass. GitHub metadata inspected on November 4, 2026 reported all three repositories as public, active, and allowing forks. The audience figures below are from that initial inspection. Repository stars measure developer visibility; US App Store rating counts give a separate, imperfect product-audience signal. Neither measure establishes downloads, active users, or the audience a case study would attract.
 
@@ -44,9 +50,9 @@ All forks default to `skills-showcase`. Their manual workflows use UI Check v0.6
 
 | Independent fork | Verified hosted evidence | Scope |
 | --- | --- | --- |
-| [Proton Pass](https://github.com/Kofiloski/ios-pass/tree/skills-showcase) | [Passed run](https://github.com/Kofiloski/ios-pass/actions/runs/42133167432): 1 UI and 5 PRF model tests; zero failures/skips | Welcome/sign-in round trip and PRF input/salt logic, with 1.22.1 → 1.23.0 release context |
-| [Firefox](https://github.com/Kofiloski/firefox-ios/tree/skills-showcase) | [Passed run](https://github.com/Kofiloski/firefox-ios/actions/runs/42133538018): 1 UI test; zero failures/skips | Native tab creation and two actual tab-tray cells; branch snapshot, no release pair |
-| [DuckDuckGo](https://github.com/Kofiloski/apple-browsers/tree/skills-showcase) | [Passed run](https://github.com/Kofiloski/apple-browsers/actions/runs/42212517733): 1 UI test; zero failures/skips | Real keyboard switches, navigation and relaunch persistence; branch snapshot and system-font fallback |
+| [Proton Pass](https://github.com/Kofiloski/ios-pass/tree/skills-showcase) | [Passed run](https://github.com/Kofiloski/ios-pass/actions/runs/42133167432), [permanent evidence](https://github.com/Kofiloski/ios-pass/releases/tag/skills-baseline-42133167432): 1 UI and 5 PRF unit tests; zero failures/skips | Welcome/sign-in round trip and PRF input/salt logic, with 1.22.1 → 1.23.0 release context |
+| [Firefox](https://github.com/Kofiloski/firefox-ios/tree/skills-showcase) | [Passed run](https://github.com/Kofiloski/firefox-ios/actions/runs/42133538018), [permanent evidence](https://github.com/Kofiloski/firefox-ios/releases/tag/skills-baseline-42133538018): 1 UI test; zero failures/skips | Native tab creation and two actual tab-tray cells; branch snapshot, no release pair |
+| [DuckDuckGo](https://github.com/Kofiloski/apple-browsers/tree/skills-showcase) | [Passed run](https://github.com/Kofiloski/apple-browsers/actions/runs/42212517733), [permanent evidence](https://github.com/Kofiloski/apple-browsers/releases/tag/skills-baseline-42212517733): 1 UI test; zero failures/skips | Real keyboard switches, navigation and relaunch persistence; branch snapshot and system-font fallback |
 
 Proton's first hosted build passed but comparison setup could not find the pinned base commit in the fork. Its workflow now fetches and validates both exact upstream commits before building; a fresh-checkout preflight and the complete hosted replay passed. DuckDuckGo's first hosted attempt compiled the app but rejected the hard-coded Autofill extension ID under the isolated app ID. The next build passed, but the Network extension embedded by a shell phase bypassed normal build-time validation and failed at Simulator installation. Both Debug Simulator IDs now derive from `APP_ID`, all five embedded extension IDs were verified in Xcode settings, and the helper checks the built app's complete extension list. The complete replay passed one native test in 181.367 seconds. Device identities and production Swift/test logic are unchanged.
 
@@ -71,7 +77,7 @@ The public project nevertheless attaches a missing `scripts/internal/replace_obf
 3. Inspect existing app-owned tests, launch hooks, fixtures and build scripts before scaffolding. Reuse native XCTest and explicit prerequisites; do not assume AXe, Maestro, or another optional inspector is installed.
 4. On each source refresh, prove a manual hosted build and a meaningful deterministic UI assertion for each selected app. Preserve build failures and missing prerequisites instead of reporting an empty launch/screenshot check as coverage. Static review scans do not establish a UI pass.
 5. Add recurring upstream release comparisons only after the baseline passes. A fork's `release` event does not subscribe to upstream releases: poll upstream metadata or deliberately mirror releases. Pin the resolved app release pair and retain the Action's checkout/head validation. Do not compare a harness-only commit and describe it as the upstream release.
-6. For case studies, publish per-change coverage, actual screenshots/video/XCTest results and limitations. Workflow parent artifacts are retained for 14 days, so download evidence for longer-lived materials. Do not enable inherited upstream release, deployment, Slack, or issue-management workflows merely to run these checks.
+6. For case studies, publish per-change coverage, actual screenshots/video/XCTest results and limitations. Parent artifacts expire after 14 days and the action artifact after seven; permanent baseline release assets now retain the original proof beyond those windows. Do not enable inherited upstream release, deployment, Slack, or issue-management workflows merely to run these checks.
 
 GitHub's [Xcode 27 runner inventory](https://github.com/actions/runner-images/blob/main/images/macos/xcode-27-arm64-Readme.md) includes Xcode 27.1 and iOS 27 runtimes as inspected on November 5. The Proton example selects `xcode-27` and Xcode 27.1 explicitly. Verify the supported runner label and installed versions at implementation time; do not assume the ordinary macOS 26 runner contains that Xcode version. Match each pinned app revision to an available toolchain and record the observed preflight.
 
@@ -81,7 +87,7 @@ The machine-readable assessment is stored outside the distributable bundle in th
 
 The three forks now have a separate `skills-release-regression.yml` workflow,
 pinned to the reviewed, unreleased action implementation
-`fec98e75076c9f07aa9c47b017b6998d64b98d19`. It discovers stable iOS tags, compares
+`8da08908b1c3ea07c417bcb6af94321f54101920`. It discovers stable iOS tags, compares
 immutable previous/new commits, applies only the app-owned harness, and generates
 new JSON scenarios for native XCTest. Cases cite changed files; uncovered changes
 remain explicit. The fixed baseline passes above remain separate evidence.
@@ -90,12 +96,14 @@ The implementation separates uncredentialed app builds/tests from credentialed
 planning and write-enabled publication. Reports and evidence are retained as
 immutable attempt assets on each fork's `ui-check-*` releases. `ui-check-state`
 persists a queue, including later hotfixes. First discovery starts at the latest
-pair; manual inputs replay older pairs. Daily polling was enabled on all three
-forks on November 7, 2026 (Europe/Skopje), at the owner's explicit request:
-`ENABLE_RELEASE_CHECKS=true`, with each workflow active on `skills-showcase`.
-The schedule polls at 07:17 UTC daily. No planner key is configured, so new
-comparisons produce blocked reports and skip macOS work until credentials are
-supplied. Enabling the schedule does not establish live generated UI coverage.
+pair; manual inputs replay older pairs. After the owner approved the independent
+review's recommendations on November 7, recurring release checks were paused for
+Firefox and Proton: their scheduled triggers were removed and
+`ENABLE_RELEASE_CHECKS=false`. Their manual workflows and evidence remain.
+DuckDuckGo retains `ENABLE_RELEASE_CHECKS=true` and the daily 07:17 UTC poll.
+No planner key is configured, so new comparisons produce blocked reports and
+skip macOS work until credentials are supplied. Enabling the schedule does not
+establish live generated UI coverage.
 
 | Fork | Credential-gate verification | Selected pair |
 | --- | --- | --- |
@@ -105,7 +113,7 @@ supplied. Enabling the schedule does not establish live generated UI coverage.
 
 These hosted runs skipped macOS and generation because no model key is configured.
 They verified discovery, missing-key gating and durable report publication,
-not generated test quality or a new release's native UI pass. The action's 132
+not generated test quality or a new release's native UI pass. The action's 135
 maintenance tests passed locally, including generic Swift SDK typechecking;
 fixture provider transport is separate from live Anthropic/OpenAI access. See the
 [action release-flow documentation](https://github.com/Kofiloski/ios-ai-ui-check/blob/main/docs/release-regressions.md)
@@ -118,3 +126,33 @@ all parsed settings except private-font removal and two Debug Simulator override
 That helper passed against both source snapshots, and the remaining overlay
 applies cleanly. This source preparation is separate from a full release build or
 live model-generated UI execution.
+
+## Controlled flagship proof
+
+[DuckDuckGo run 42372200480](https://github.com/Kofiloski/apple-browsers/actions/runs/42372200480)
+ran the same unchanged upstream keyboard-preference UI test against the original
+app, an explicitly seeded shared-storage-key fault, and restored original source.
+Independent `xcresulttool` reads verified **one pass → one native assertion
+failure → one pass**, with zero skips. The failure was an actual observed switch
+value of 1 where 0 was expected; the original and restored source hashes match.
+
+[Permanent evidence and native recordings](https://github.com/Kofiloski/apple-browsers/releases/tag/skills-controlled-proof-42372200480-1)
+include the exact mutation, test/source/harness/action identities, logs and all
+three native result bundles. The archive hash was verified against GitHub's
+published asset digest before extracting and independently reading the bundles.
+
+This demonstrates that the native assertion catches a relevant application fault.
+The fault is deliberately seeded; it is not claimed as an upstream release bug.
+The workflow uses the inspected branch snapshot and fixed native test, not a live
+provider-generated case. The fresh hosted checkout establishes cold CI
+reproducibility; a measured fresh-user onboarding study and a complete unattended
+diff-generated release run remain outstanding.
+
+The two reviewed pipeline defects are fixed in the pinned runtime: force-latest
+selection now precedes the ordinary pending queue, and release descriptions link
+the newest published attempt after its assets upload. Regression tests cover
+pending older tags, explicit-head precedence, blocked/pass/fail retries, retained
+attempts and failed uploads. A hosted blocked replay also verified that the
+updated publisher refreshes its latest-attempt link without relabelling missing
+generation as success. Firefox's baseline preflight now rejects non-iPhone
+destinations so an upstream early return cannot masquerade as executed coverage.

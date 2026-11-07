@@ -5,7 +5,7 @@
 
 Three agent skills for reviewing Apple release risks, repairing XCUITest failures, and checking iOS Simulator UI.
 
-See UI Check running in [Proton Pass](https://github.com/Kofiloski/ios-pass), [Firefox](https://github.com/Kofiloski/firefox-ios), and [DuckDuckGo](https://github.com/Kofiloski/apple-browsers). [Verified results and coverage](docs/popular-app-benchmarks.md).
+Active flagship: [DuckDuckGo's controlled native regression proof](https://github.com/Kofiloski/apple-browsers/releases/tag/skills-controlled-proof-42372200480-1). [Proton Pass](https://github.com/Kofiloski/ios-pass) and [Firefox](https://github.com/Kofiloski/firefox-ios) remain frozen integration references. [Verified results and coverage](docs/popular-app-benchmarks.md).
 
 | Skill | Use it to |
 | --- | --- |
